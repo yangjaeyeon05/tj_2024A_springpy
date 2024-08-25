@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!-- http://localhost:8080/index4.html -->
+    <h3> 인천광역시 아파트 실거래가 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> 시군구 </th> <th> 단지명 </th> <th> 전용면적 </th> <th> 계약년월 </th> <th> 계약일 </th>
+                <th> 거래금액 </th> <th> 층 </th>
+            </tr>
+        </thead>
+        <tbody class="getall">
+        
+        </tbody>
+    </table>
+    <h3> 가장 높은 거래금액 과 가장 낮은 거래금액의 해당 하는 거래의 시군구,단지명,전용면적 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> 시군구 </th> <th> 단지명 </th> <th> 전용면적 </th> 
+            </tr>
+        </thead>
+        <tbody class="max_min">
+        
+        </tbody>
+    </table>
+    <h3> OO 구별 거래량 수 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> 시군구 </th> <th> 거래량수 </th>
+            </tr>
+        </thead>
+        <tbody class="trade">
+        
+        </tbody>
+    </table>
+    <h3> 단지별 거래량 수 TOP 10  </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> 단지명 </th> <th> 거래량수 </th>
+            </tr>
+        </thead>
+        <tbody class="top_ten">
+        
+        </tbody>
+    </table>
+    <!-- jquery 라이브러리 -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        // Flask 서버에 통신
+        $.ajax({
+            method : 'get' ,
+            url : "http://127.0.0.1:5000/getall" ,
+            success : (r) => {
+                console.log(r)
+                let getall = document.querySelector('.getall')
+                let html = ``
+                r.forEach(dic => {
+                    html += `
+                        <tr>
+                            <th> ${dic.location} </th> <th> ${dic.name} </th> <th> ${dic.area} </th> <th> ${dic.year_month} </th> <th> ${dic.day} </th>
+                            <th> ${dic.contract_amount} </th> <th> ${dic.floor} </th>
+                        </tr>
+                    `
+                });
+                getall.innerHTML = html;
+            }
+        })
+        // maxminlist
+        $.ajax({
+            method : 'get' ,
+            url : "http://127.0.0.1:5000/maxminlist" ,
+            success : (r) => {
+                console.log(r)
+                let max_min = document.querySelector('.max_min')
+                let html = ``
+                r.forEach(dic => {
+                    html += `
+                        <tr>
+                            <th> ${dic.location} </th> <th> ${dic.name} </th> <th> ${dic.area} </th>
+                        </tr>
+                    `
+                });
+                max_min.innerHTML = html;
+            }
+        })
+
+        // totaltradingvolume
+        $.ajax({
+            method : 'get' ,
+            url : "http://127.0.0.1:5000/totaltradingvolume" ,
+            success : (r) => {
+                console.log(r)
+                let trade = document.querySelector('.trade')
+                let html = ``
+                Object.entries(r).forEach(([key, value]) => {   // JavaScript 객체의 키와 값을 쌍으로 포함하는 배열을 반환합니다.
+                    console.log(`${key}: ${value}`);
+                    html += `<tr>
+                                <th> ${key} </th> <th> ${value} </th>
+                            </tr>`;
+                });
+                trade.innerHTML = html;
+            }
+        })
+
+        // topten
+        $.ajax({
+            method : 'get' ,
+            url : "http://127.0.0.1:5000/top_ten_transaction" ,
+            success : (r) => {
+                console.log(r)
+                let top_ten = document.querySelector('.top_ten')
+                let html = ``
+                r.forEach(([key, value]) => {
+                        html += `<tr>
+                                    <th>${key}</th> <th>${value}</th>
+                                </tr>`;
+                    });
+                top_ten.innerHTML = html;
+            }
+        })
+        
+    </script>
+</body>
+</html>
