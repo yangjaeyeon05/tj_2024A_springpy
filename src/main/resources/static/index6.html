@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!-- http://localhost:8080/index4.html -->
+    <h3> 잡코리아 검색 크롤링 </h3>
+    <span class="totalBox"> </span>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> 회사명 </th> <th> 공고명 </th> <th> 경력 </th> <th> 학력 </th> <th> 계약유형 </th> <th> 지역 </th> <th> 채용기간 </th>
+            </tr>
+        </thead>
+        <tbody class="storeInfoTable">
+        
+        </tbody>
+    </table>
+
+    <!-- jquery 라이브러리 -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        // Flask 서버에 통신
+        $.ajax({
+            async : false , 
+            method : 'get' ,
+            url : "http://192.168.30.28:5000/getjobinfo" ,
+            success : (r) => {
+                console.log(r)
+                let storeInfoTable = document.querySelector('.storeInfoTable')
+                let html = ``
+                r.forEach(job => {
+                    console.log(job.기타);
+                    info = job.기타
+                    html += `
+                        <tr>
+                            <th> ${job.회사명} </th> <th> ${job.공고명} </th> <th> ${job.기타[0]} </th> <th> ${job.기타[1]} </th> <th> ${job.기타[2]} </th> <th> ${job.기타[3]} </th> <th> ${job.기타[4]} </th>
+                            </tr>
+                    `
+
+                });
+                storeInfoTable.innerHTML = html;
+            }
+        })  // ajax end
+
+        $.ajax({
+            async : false , 
+            method : 'get' ,
+            url : "http://192.168.30.28:5000/totalJob" ,
+            success : (r) => {
+                console.log(r)
+                let totalBox = document.querySelector('.totalBox')
+                let html = `총 공고 수 : ${r}`
+                
+                totalBox.innerHTML = html;
+            }
+        })  // ajax end
+        
+    </script>
+</body>
+</html>
