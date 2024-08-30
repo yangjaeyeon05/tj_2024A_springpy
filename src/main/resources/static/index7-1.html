@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!-- http://localhost:8080/index7.html -->
+
+    <h3> 인천광역시 부평구 전월세 통계 </h3>
+    <table border="1">
+        <thead>
+
+        </thead>
+        <tbody class="totalInfo">
+        
+        </tbody>
+    </table>
+
+    <h3> 전월세 기준 전용 면적 기술통계 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>  </th> <th> 월세 </th> <th> 전세 </th> 
+            </tr>
+        </thead>
+        <tbody class="areaInfo">
+        
+        </tbody>
+    </table>
+
+    <h3> 부평구 동이름 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> 동명 </th>
+            </tr>
+        </thead>
+        <tbody class="dongname">
+        
+        </tbody>
+    </table>
+
+    <h3> 가장 거래수가 많은 단지명 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> 단지명 </th> <th> 거래량 </th>
+            </tr>
+        </thead>
+        <tbody class="highesttrading">
+        
+        </tbody>
+    </table>
+
+
+    <!-- jquery 라이브러리 -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        // 인천광역시 부평구 전월세(최근 1년)
+        $.ajax({
+            async : false , 
+            method : 'get' ,
+            url : "http://localhost:5000/trans1" ,
+            success : (response) => {
+                console.log(response)
+                // 1.
+                let thead = document.querySelector('thead') // 1-1 테이블 제목
+                    // 1-2 제목 구성
+                let responseKeys = Object.keys( response )
+                console.log(responseKeys)   // ['NO', '건축년도', '계약년월', '계약일', '본번', '부번', '월세금(만원)', '전용면적(㎡)', '종전계약 월세(만원)', '층']
+
+                let html = `<tr> <th> </th>`
+                responseKeys.forEach( key => {  html += ` <th> ${ key } </th>`})
+
+                html += `</tr>`
+                thead.innerHTML = html;  // 1-3 대입
+
+                    // 1- 4 내용 구성
+                let tbody = document.querySelector('tbody')
+
+                const allDetailKeys = Object.keys(response[responseKeys[0]]);   // ['25%', '50%', '75%', 'count', 'max', 'mean', 'min', 'std']
+                console.log(allDetailKeys)
+                let html2 = ``
+                // 각 detailKey마다 행을 생성
+                allDetailKeys.forEach(detailkey => {
+                    html2 += `<tr> <td> ${detailkey} </td>`;
+                    // 각 responseKey마다 해당 detailKey의 값을 출력
+                    responseKeys.forEach(key => {
+                        const keyValue = response[key];
+                        console.log(keyValue)   // {25%: 3086.5, 50%: 6172, 75%: 9458, count: 37031, max: 17805, …}
+                        html2 += `<td> ${keyValue[detailkey]} </td>`;
+                    });
+                    html2 += `</tr>`;
+                });
+
+                tbody.innerHTML = html2;
+            }
+        })  // ajax end
+
+        // 전월세기준 전용면적
+        $.ajax({
+            async : false , 
+            method : 'get' ,
+            url : "http://192.168.30.28:5000/trans2" ,
+            success : (r) => {
+                console.log(r)
+                let areaInfo = document.querySelector('.areaInfo')
+                let html = ``
+                Object.entries(r).forEach(([key, value]) => {   // JavaScript 객체의 키와 값을 쌍으로 포함하는 배열을 반환합니다.
+                    console.log(`${key}: ${value}`);
+                    html += `<tr>
+                                <th> ${key} </th> <th> ${value.월세} </th> <th> ${value.전세} 
+                            </tr>`;
+                });
+                
+                areaInfo.innerHTML = html;
+            }
+        })  // ajax end
+
+        // 부평구 동이름
+        $.ajax({
+            async : false , 
+            method : 'get' ,
+            url : "http://192.168.30.28:5000/trans3" ,
+            success : (r) => {
+                console.log(r)
+                let dongname = document.querySelector('.dongname')
+                let html = ``
+                r.forEach(name => {
+                    html += `<tr>
+                                <th> ${name} </th>
+                            </tr>`;
+                })
+                
+                dongname.innerHTML = html;
+            }
+        })  // ajax end
+
+         // 가장 거래수가 많은 단지명
+         $.ajax({
+            async : false , 
+            method : 'get' ,
+            url : "http://192.168.30.28:5000/trans4" ,
+            success : (r) => {
+                console.log(r)
+                let highesttrading = document.querySelector('.highesttrading')
+                let html = ``
+                // .sort((a, b) => b[1] - a[1]) 내림차순 정렬하고
+                Object.entries(r).sort((a, b) => b[1] - a[1]).forEach(([key, value]) => {   // JavaScript 객체의 키와 값을 쌍으로 포함하는 배열을 반환합니다.
+                    console.log(`${key}: ${value}`);
+                    html += `<tr>
+                                <th> ${key} </th> <th> ${value} </th>
+                            </tr>`;
+                });
+                
+                highesttrading.innerHTML = html;
+            }
+        })  // ajax end
+
+    </script>
+</body>
+</html>

@@ -7,7 +7,6 @@
 <body>
     <!-- http://localhost:8080/index7.html -->
     <h3> 전월세 기준 전용 면적 기술통계 </h3>
-    <span class="totalBox"> </span>
     <table border="1">
         <thead>
             <tr>
@@ -20,7 +19,6 @@
     </table>
 
     <h3> 인천광역시 부평구 전월세(최근 1년) 전체 기술통계 </h3>
-    <span class="totalBox"> </span>
     <table border="1">
         <thead>
             <tr>
@@ -33,9 +31,21 @@
         </tbody>
     </table>
 
+    <h3> 인천광역시 부평구 전월세(최근 3년) 전체 기술통계 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>  </th> <th> NO </th> <th> 건축년도 </th> <th> 계약년월 </th> <th> 계약일 </th> <th> 본번 </th>
+                <th> 부번 </th> <th> 월세금(만원) </th> <th> 전용면적(㎡)</th> <th> 층</th>
+            </tr>
+        </thead>
+        <tbody class="totalInfothreeyear">
+        
+        </tbody>
+    </table>
+
    
     <h3> 부평구 동이름 </h3>
-    <span class="totalBox"> </span>
     <table border="1">
         <thead>
             <tr>
@@ -48,7 +58,6 @@
     </table>
 
     <h3> 가장 거래수가 많은 단지명 </h3>
-    <span class="totalBox"> </span>
     <table border="1">
         <thead>
             <tr>
@@ -73,6 +82,7 @@
                 console.log(r)
                 let totalInfo = document.querySelector('.totalInfo')
                 let html = ``
+                // Object.entries : 객체의 {key : value} 형식을 배열 형태의 [key, value] 로 변환하여 준다. 
                 Object.entries(r).forEach(([key, value]) => {   // JavaScript 객체의 키와 값을 쌍으로 포함하는 배열을 반환합니다.
                     console.log(`${key}: ${value}`);
                     html += `<tr>
@@ -82,6 +92,27 @@
                 });
                 
                 totalInfo.innerHTML = html;
+            }
+        })  // ajax end
+
+        // 인천광역시 부평구 전월세3년
+        $.ajax({
+            async : false , 
+            method : 'get' ,
+            url : "http://192.168.30.28:5000/trans" ,
+            success : (r) => {
+                console.log(r)
+                let totalInfothreeyear = document.querySelector('.totalInfothreeyear')
+                let html = ``
+                Object.entries(r).forEach(([key, value]) => {   // JavaScript 객체의 키와 값을 쌍으로 포함하는 배열을 반환합니다.
+                    console.log(`${key}: ${value}`);
+                    html += `<tr>
+                                <th> ${key} </th> <th> ${value.NO} </th> <th> ${value.건축년도} </th> <th> ${value.계약년월} </th> <th> ${value.계약일} </th>
+                                <th> ${value.본번} </th> <th> ${value.부번} </th> <th> ${value.월세금만원} </th> <th> ${value.전용면적} </th> <th> ${value.층} </th>
+                            </tr>`;
+                });
+                
+                totalInfothreeyear.innerHTML = html;
             }
         })  // ajax end
 
@@ -133,7 +164,7 @@
                 console.log(r)
                 let highesttrading = document.querySelector('.highesttrading')
                 let html = ``
-                // .sort((a, b) => b[1] - a[1]) 내림차순 정렬하고
+                // .sort((a, b) => b[1] - a[1]) 내림차순 정렬하고 , b[1] - a[1]는 두 번째 요소가 큰 쪽이 앞에 오도록 배열을 내림차순으로 정렬 , 오름차순 : a[1] - b[1]
                 Object.entries(r).sort((a, b) => b[1] - a[1]).forEach(([key, value]) => {   // JavaScript 객체의 키와 값을 쌍으로 포함하는 배열을 반환합니다.
                     console.log(`${key}: ${value}`);
                     html += `<tr>
