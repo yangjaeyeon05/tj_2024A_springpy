@@ -65,6 +65,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     <script>
+
         // 행정동 단위 서울생활인구(내국인)
         $.ajax({
             async : false ,
@@ -155,7 +156,6 @@
                 
                 describeBox.innerHTML = html2;
             }
-            
         })  // ajax end
 
         // 시간대별 총 인구수 기술통계
@@ -233,7 +233,6 @@
         })  // ajax end
 
         // 행정동코드별 남여 인구수
-
          $.ajax({
             async : false ,
             method : 'get' ,
@@ -251,8 +250,8 @@
                 });
                 male_female.innerHTML = html2;
             }
-            
         })  // ajax end
+
     </script>
 </body>
 </html>
