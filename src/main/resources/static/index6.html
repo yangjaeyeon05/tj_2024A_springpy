@@ -5,8 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-    <!-- http://localhost:8080/index4.html -->
+    <!-- http://localhost:8080/index6.html -->
+    
     <h3> 잡코리아 검색 크롤링 </h3>
+    <input type="text" class="searchKeyword"/> <button type="button" onclick="search()">검색</button>
     <span class="totalBox"> </span>
     <table border="1">
         <thead>
@@ -14,7 +16,7 @@
                 <th> 회사명 </th> <th> 공고명 </th> <th> 경력 </th> <th> 학력 </th> <th> 계약유형 </th> <th> 지역 </th> <th> 채용기간 </th>
             </tr>
         </thead>
-        <tbody class="storeInfoTable">
+        <tbody class="jobInfoTable">
         
         </tbody>
     </table>
@@ -27,10 +29,10 @@
         $.ajax({
             async : false , 
             method : 'get' ,
-            url : "http://192.168.30.28:5000/getjobinfo" ,
+            url : "http://127.0.0.1:5000/getjobinfo" ,
             success : (r) => {
-                console.log(r)
-                let storeInfoTable = document.querySelector('.storeInfoTable')
+            console.log(r)
+                let jobInfoTable = document.querySelector('.jobInfoTable')
                 let html = ``
                 r.forEach(job => {
                     console.log(job.기타);
@@ -38,18 +40,19 @@
                     html += `
                         <tr>
                             <th> ${job.회사명} </th> <th> ${job.공고명} </th> <th> ${job.기타[0]} </th> <th> ${job.기타[1]} </th> <th> ${job.기타[2]} </th> <th> ${job.기타[3]} </th> <th> ${job.기타[4]} </th>
-                            </tr>
-                    `
+                        </tr>
+                        `
 
                 });
-                storeInfoTable.innerHTML = html;
+                jobInfoTable.innerHTML = html;
             }
         })  // ajax end
+       
 
         $.ajax({
             async : false , 
             method : 'get' ,
-            url : "http://192.168.30.28:5000/totalJob" ,
+            url : "http://127.0.0.1:5000/totalJob" ,
             success : (r) => {
                 console.log(r)
                 let totalBox = document.querySelector('.totalBox')
