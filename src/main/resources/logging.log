@@ -3241,3 +3241,19 @@ com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Incorrect dat
 2024-09-02T16:14:14.547+09:00  INFO 5402 --- [main] example.task1.AppStart                   : Started AppStart in 1.998 seconds (process running for 2.285)
 2024-09-02T16:14:14.955+09:00  INFO 5402 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-09-02T16:14:16.391+09:00  INFO 5402 --- [http-nio-8080-exec-3] example.task1.AccountService             : delete success
+2024-09-02T16:16:49.508+09:00  INFO 7780 --- [main] example.task1.AppStart                   : Starting AppStart using Java 17.0.11 with PID 7780 (C:\Users\tj-bu-703-008\Desktop\tj_2024A_springpy\build\classes\java\main started by tj-bu-703-008 in C:\Users\tj-bu-703-008\Desktop\tj_2024A_springpy)
+2024-09-02T16:16:49.524+09:00  INFO 7780 --- [main] example.task1.AppStart                   : No active profile set, falling back to 1 default profile: "default"
+2024-09-02T16:16:51.429+09:00  INFO 7780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-09-02T16:16:51.444+09:00  INFO 7780 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-02T16:16:51.444+09:00  INFO 7780 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-02T16:16:51.594+09:00  INFO 7780 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-02T16:16:51.594+09:00  INFO 7780 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1989 ms
+2024-09-02T16:16:51.914+09:00  INFO 7780 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-02T16:16:52.294+09:00  INFO 7780 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@fe09383
+2024-09-02T16:16:52.294+09:00  INFO 7780 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-02T16:16:53.912+09:00  INFO 7780 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-09-02T16:16:53.932+09:00  INFO 7780 --- [main] example.task1.AppStart                   : Started AppStart in 5.114 seconds (process running for 5.721)
+2024-09-02T16:16:58.652+09:00  INFO 7780 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-02T16:17:23.051+09:00  INFO 7780 --- [http-nio-8080-exec-6] example.task1.AccountService             : add success
+2024-09-02T16:17:42.169+09:00  INFO 7780 --- [http-nio-8080-exec-8] example.task1.AccountService             : update success
+2024-09-02T16:17:46.815+09:00  INFO 7780 --- [http-nio-8080-exec-10] example.task1.AccountService             : delete success
