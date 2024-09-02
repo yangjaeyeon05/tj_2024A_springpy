@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- xml 주석 -->
+<mapper namespace="example.task1.AccountDao" >  <!-- mapper start -->
+    <!-- namespace=" 매핑할 인터페이스 경로(위치) " -->
+    <!-- id="매핑할 추상메소드명"  resultType="반환할 타입"  -->
+    <!-- parameterType="매개변수타입" sql 매개변수표현 : #{변수명}-->
+
+    <!-- [R] 1. 전체출력 -->
+    <select id="findAll" resultType="example.task1.AccountDto">
+        select * from account
+    </select>
+
+    <!-- [C] 2. 등록 -->
+    <insert id="add" parameterType="example.task1.AccountDto">
+        insert into account(accountinfo , accountprice , accountdate) values(#{accountInfo} , #{accountPrice} , #{accountDate})
+    </insert>
+
+    <!-- [U] 3. 수정 -->
+    <update id="update" parameterType="example.task1.AccountDto">
+        update account set accountinfo = #{accountInfo} , accountprice = #{accountPrice} , accountdate = #{accountDate} where accountid = #{accountId}
+    </update>
+
+    <!-- [D] 4. 삭제 -->
+    <delete id="delete" parameterType="int">
+        delete from account where accountid = #{accountId}
+    </delete>
+
+</mapper> <!-- mapper end -->
