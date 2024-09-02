@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- http://localhost:8080/index9.html -->
+
+    <h3> 전체 출력 </h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th> ID </th> <th> 설명 </th> <th> 금액 </th> <th> 날짜 </th>
+            </tr>
+        </thead>
+        <tbody class="totalInfo">
+
+        </tbody>
+    </table>
+
+    <h3> 등록 </h3>
+    <form>
+        설명 : <input type="text" class="accountInfo"/>
+        금액 : <input type="text" class="accountPrice"/>
+        날짜 : <input type="text" placeholder="ex 2024-09-02" class="accountDate"/>
+        <button type="button" onclick="add()"> 등록 </button>
+    </form>
+
+    <h3> 수정 </h3>
+    <form>
+        수정할번호 : <input type="text" class="newaccountId"/>
+        설명 : <input type="text" class="newaccountInfo"/>
+        금액 : <input type="text" class="newaccountPrice"/>
+        날짜 : <input type="text" placeholder="ex 2024-09-02" class="newaccountDate"/>
+        <button type="button" onclick="update()"> 수정 </button>
+    </form>
+
+    <!-- jquery 라이브러리 -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        findAll();
+        // 전체출력
+        function findAll(){
+            $.ajax({
+                async : false ,
+                method : 'get' ,
+                url : "/account/findall" ,
+                success : (r) => {
+                    console.log(r)
+                    let totalInfo = document.querySelector(".totalInfo")
+                    let html = ``
+                    r.forEach(data => {
+                        html += `
+                                <tr> 
+                                    <td> ${data.accountId} </td> <td> ${data.accountInfo} </td> <td> ${data.accountPrice} </td> <td> ${data.accountDate} </td>
+                                    <td><button type="button" onclick="_delete(${data.accountId})"> 삭제 </button></td>
+                                </tr>
+                        `
+                    });
+                    totalInfo.innerHTML = html;
+                }
+            })  // ajax end
+        }
+       
+        // 등록
+        function add(){
+            let accountInfo = document.querySelector(".accountInfo").value;
+            let accountPrice = document.querySelector(".accountPrice").value;
+            let accountDate = document.querySelector(".accountDate").value;
+            let info = {
+                "accountInfo" : accountInfo , "accountPrice" : accountPrice , "accountDate" : accountDate
+            }
+            console.log(info)
+            $.ajax({
+            async : false ,
+            method : 'post' ,
+            url : "/account/add" ,
+            contentType : "application/json" , 
+            data : JSON.stringify(info) ,
+            success : (r) => {
+                console.log(r)
+                alert("등록성공");
+                findAll();
+                }
+            })  // ajax end
+        }
+
+        // 수정
+        function update(){
+            let newaccountId = document.querySelector(".newaccountId").value;
+            let newaccountInfo = document.querySelector(".newaccountInfo").value;
+            let newaccountPrice = document.querySelector(".newaccountPrice").value;
+            let newaccountDate = document.querySelector(".newaccountDate").value;
+            let info = {
+                "accountId" : newaccountId , "accountInfo" : newaccountInfo , "accountPrice" : newaccountPrice , "accountDate" : newaccountDate
+            }
+            console.log(info)
+            $.ajax({
+            async : false ,
+            method : 'put' ,
+            url : "/account/update" ,
+            contentType : "application/json" , 
+            data : JSON.stringify(info) ,
+            success : (r) => {
+                console.log(r)
+                alert("수정성공");
+                findAll();
+                }
+            })  // ajax end
+        }
+
+        function _delete(accountId){
+            console.log(accountId);
+            $.ajax({
+            async : false ,
+            method : 'delete' ,
+            url : "/account/delete" ,
+            data : {"accountId" : accountId} ,
+            success : (r) => {
+                console.log(r)
+                alert("삭제성공");
+                findAll();
+                }
+            })  // ajax end
+        }
+
+    </script>
+</body>
+</html>

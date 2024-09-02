@@ -20,19 +20,25 @@ public class AccountController {
 
     // [C] 2. 등록
     @PostMapping("/add")
-    public int add(AccountDto accountDto){
+    public int add(@RequestBody AccountDto accountDto){
+        System.out.println("AccountController.add");
+        System.out.println("accountDto = " + accountDto);
         return accountService.add(accountDto);
     }   // add() end
 
     // [U] 3. 수정
     @PutMapping("/update")
-    public int update(AccountDto accountDto){
+    public int update(@RequestBody AccountDto accountDto){
+        System.out.println("AccountController.update");
+        System.out.println("accountDto = " + accountDto);
         return accountService.update(accountDto);
     }   // update() end
 
     // [D] 4. 삭제
     @DeleteMapping("/delete")
     public int delete(int accountId){
+        System.out.println("AccountController.delete");
+        System.out.println("accountId = " + accountId);
         return accountService.delete(accountId);
     }   // delete() end
 
