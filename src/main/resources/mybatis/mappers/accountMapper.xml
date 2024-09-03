@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- xml 주석 -->
 <mapper namespace="example.task1.AccountDao" >  <!-- mapper start -->
-    <!-- namespace=" 매핑할 인터페이스 경로(위치) " -->
+    <!-- namespace=" 매핑할 인터페이스 경로(위치) " # 경로 (java 폴더 아래부터) -->
     <!-- id="매핑할 추상메소드명"  resultType="반환할 타입"  -->
     <!-- parameterType="매개변수타입" sql 매개변수표현 : #{변수명}-->
 
