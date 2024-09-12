@@ -35,6 +35,11 @@ public class ChatController extends TextWebSocketHandler {
         접속된클라이언트소켓.remove(session);
         // - 현재 접속된 인원수
         System.out.println("접속인원 : " + 접속된클라이언트소켓.size());
+        // - 퇴장/제거한 세션을 제외한 다른 클라이언트소켓(세션)들에게 메시지 전송
+        // - 클라이언트소켓의 정보를 세션에서 저장하고 있다.
+        // - 서버에서 클라이언트에게 메시지를 전송 하기
+        TextMessage textMessage = new TextMessage("Hello , ClientSocket");  // 메시지 내용 구성
+        handleTextMessage(null , textMessage);  // 메시지 전송 함수
     }
     // 3. 클라이언트가 서버 웹소켓에 메세지를 보냈을 떄
     // # 서버가 메세지를 받을때 이후 로직 구현
@@ -42,6 +47,8 @@ public class ChatController extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         System.out.println("session = " + session + ", message = " + message);
         System.out.println(message.getPayload());
+
+            // 메시지 내용 DB 처리 : 메시지 정보를 DTO화 해서  ---> Service ---> Dao
 
         // - 특정한 세션으로 받은 메세지 내용들 현재 접속된 다른 세션에게도 전달
             // 1. 모든 접속된 클라이언트소켓 하나씩 꺼내기
